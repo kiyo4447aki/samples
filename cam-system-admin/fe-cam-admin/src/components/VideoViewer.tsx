@@ -1,4 +1,3 @@
-// src/VideoViewer.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { JanusSignalingClient, JanusSignalingOptions } from '../lib/JanusSignalingClient';
