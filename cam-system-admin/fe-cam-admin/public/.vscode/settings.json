@@ -1,0 +1,35 @@
+{
+  // フォーマット設定
+  "editor.formatOnSave": true, // 保存時に自動フォーマット
+  "editor.formatOnPaste": true, // ペースト時に自動フォーマット
+  "editor.formatOnType": true, // タイプ時に自動フォーマット
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // デフォルトのフォーマッターをPrettierに設定
+
+  // ESLint設定
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
+  // ファイルタイプごとの設定
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // ESLint検証対象
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+}

@@ -1,0 +1,123 @@
+version: "3"
+
+services:
+    nginx:
+        container_name: nginx
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        ports:
+            - "9000:9000"
+            - "1935:1935"
+            - "3000:3000"
+            - "5000:5000"
+        volumes:
+            - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+            - ./nginx/conf.d/tunnel.conf:/etc/nginx/conf.d/tunnel.conf
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./nginx/rtmp.conf:/etc/nginx/rtmp.conf
+
+        depends_on:
+            - signaling_server
+        links:
+            - signaling_server
+        networks:
+            - frontend
+            - backend
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
+    signaling_server:
+        container_name: signaling_server
+        restart: unless-stopped
+        build:
+            context: ./signaling_server
+            dockerfile: Dockerfile
+        environment:
+            TZ: Asia/Tokyo
+        networks:
+            - backend
+
+    auth_server:
+        container_name: auth_server
+        restart: unless-stopped
+        build:
+            context: ./auth-api
+            dockerfile: Dockerfile
+        networks:
+            - backend
+
+    mysql:
+        container_name: mysql-db
+        image: mysql-db:latest
+        restart: unless-stopped
+        build:
+            context: ./mysql
+            dockerfile: Dockerfile
+        volumes:
+            - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+            - mysql-data:/var/lib/mysql
+        env_file:
+            - ./mysql/mysql.env
+        networks:
+            - backend
+
+    coturn:
+        container_name: coturn
+        image: coturn_server:latest
+        restart: unless-stopped
+        build:
+            context: ./coturn
+            dockerfile: ./docker/coturn/debian/Dockerfile
+        volumes:
+            - ./coturn/docker/coturn/privkey.pem:/etc/ssl/private/privkey.pem:ro
+            - ./coturn/docker/coturn/cert.pem:/etc/ssl/certs/cert.pem:ro
+            - ./turnserver.conf:/etc/turnserver.conf:ro
+        ports:
+            ## STUN/TURN
+            - "3478:3478"
+            - "3478:3478/udp"
+            - "3479:3479"
+            - "3479:3479/udp"
+            - "80:80"
+            - "80:80/udp"
+            ## STUN/TURN SSL
+            - "5349:5349"
+            - "5349:5349/udp"
+            - "5350:5350"
+            - "5350:5350/udp"
+            - "443:443"
+            - "443:443/udp"
+        # Relay Ports
+        #   - "49152-65535:49152-65535"
+        #   - "49152-65535:49152-65535/udp"
+        networks:
+            frontend:
+                ipv4_address: 172.19.0.15
+            backend:
+        depends_on:
+            - mysql
+        env_file:
+            - ./mysql/mysql.env
+
+    tunnel_server:
+        container_name: tunnel_server
+        restart: unless-stopped
+        build:
+            context: ./tunnel_server
+            dockerfile: Dockerfile
+        network_mode: host
+
+volumes:
+    mysql-data:
+
+networks:
+    frontend:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.19.0.0/16
+    backend:
+        internal: true

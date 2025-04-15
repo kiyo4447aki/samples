@@ -1,0 +1,14 @@
+[Unit]
+Description=recording service
+Wants=Network-online.target
+After=Network-online.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+ExecStart=/home/dev/camera_recorder/recording/main.py
+WorkingDirectory=/home/dev/camera_recorder/recording
+
+[Install]
+WantedBy=multi-user.target

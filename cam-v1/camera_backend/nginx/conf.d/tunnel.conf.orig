@@ -1,0 +1,63 @@
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+
+
+server {
+    #サーバー設定
+    listen          3000 ssl;
+    server_name     backend.skypics.jp;
+
+    ssl_certificate /etc/nginx/ssl/certificate.crt;
+    ssl_certificate_key /etc/nginx/ssl/private.key;
+
+    
+
+    location / {
+        proxy_pass http://host.docker.internal:6500;
+
+        proxy_http_version 1.1;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Proto http;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+
+        proxy_redirect off;
+    }
+
+}
+
+server {
+    #サーバー設定
+    listen          3000 ssl;
+    server_name     *.backend.skypics.jp;
+
+    ssl_certificate /etc/nginx/ssl/tunnel/fullchain1.pem;
+    ssl_certificate_key /etc/nginx/ssl/tunnel/privkey1.pem;
+
+    
+
+    location / {
+        proxy_pass http://host.docker.internal:6500;
+
+        proxy_http_version 1.1;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Proto http;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+
+        proxy_redirect off;
+    }
+
+}
+
+
+

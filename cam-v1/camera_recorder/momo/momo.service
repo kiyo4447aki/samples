@@ -1,0 +1,14 @@
+[Unit]
+Description=wevRTC momo service
+Wants=Network-online.target v4l2_stream.service
+After=Network-online.target v4l2_stream.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+ExecStart=/home/dev/camera_recorder/momo/main.py
+WorkingDirectory=/home/dev/camera_recorder/momo
+
+[Install]
+WantedBy=multi-user.target

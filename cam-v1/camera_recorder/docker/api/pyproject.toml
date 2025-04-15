@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "api"
+version = "0.1.0"
+description = ""
+authors = ["KiyoakiYamamoto <kiyo4447aki@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.115.8"
+uvicorn = {extras = ["standard"], version = "^0.34.0"}
+gunicorn = "^23.0.0"
+python-dotenv = "^1.0.1"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+ffmpeg-python = "^0.2.0"
+pydantic = "^2.10.6"
+requests = "^2.32.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

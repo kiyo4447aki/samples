@@ -1,0 +1,26 @@
+{
+	"configurations": [
+		{
+			"name": "Linux",
+			"includePath": [
+				"${workspaceFolder}/**",
+				"/home/kiyo/.arduino15/packages/arduino/hardware/**",
+				"/home/kiyo/.arduino15/packages/arduino/tools/**",
+				"/home/kiyo/Arduino/libraries/**"
+			],
+			"defines": [],
+			"compilerPath": "/usr/bin/gcc",
+			"cStandard": "c17",
+			"cppStandard": "gnu++17",
+			"intelliSenseMode": "linux-gcc-x64",
+			"browse": {
+				"path": [
+					"${workspaceFolder}/**",
+					"/home/kiyo/.arduino15/packages/arduino/hardware/**",
+					"/home/kiyo/Arduino/libraries/**"
+				]
+			}
+		}
+	],
+	"version": 4
+}
