@@ -4,8 +4,7 @@ import firebaseApp from "../firebase"
 
 const messaging = getMessaging(firebaseApp)
 
-const vapidKey =
-	"BDRRBehbAv_5IJh0alW48Zop4KNIYf1BCAVlmLJPFYoLUszThIZLuUPAA_kzzc8NqCvadX2vns65q09DJz1XkLE"
+const vapidKey = ""
 
 /*
 const requestForToken = () => {

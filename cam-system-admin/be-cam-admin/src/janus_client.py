@@ -1,4 +1,3 @@
-# backend/janus_client.py
 import os
 import requests
 from dotenv import load_dotenv
@@ -6,12 +5,11 @@ import uuid
 
 load_dotenv(override=True)
 
-JANUS_URL = os.environ.get("JANUS_URL", "http://janus.example.com:8088/janus")
+JANUS_URL = os.environ.get("JANUS_URL", "")
 JANUS_ADMIN_KEY = os.environ.get("JANUS_ADMIN_KEY", None)
 
 
 def generate_transaction():
-    # Janus.randomString が使えない場合、標準の UUID を利用する方法
     return uuid.uuid4().hex
 
 def list_rooms():

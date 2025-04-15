@@ -1,4 +1,3 @@
-# backend/auth.py
 from fastapi import APIRouter, HTTPException, Request, Response, status
 from pydantic import BaseModel
 import os

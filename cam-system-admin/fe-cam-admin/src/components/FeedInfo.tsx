@@ -1,4 +1,3 @@
-// FeedInfo.tsx
 import React, { useEffect, useState } from 'react';
 import { JanusSignalingClient } from '../lib/JanusSignalingClient';
 import StreamDetails from './StreamDetails';

@@ -1,4 +1,3 @@
-# backend/hash_password.py
 import bcrypt
 import sys
 

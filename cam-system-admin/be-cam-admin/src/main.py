@@ -1,4 +1,3 @@
-# backend/main.py
 from fastapi import FastAPI, Depends
 from .auth import verify_credentials, auth_router
 from .janus_client import list_rooms, list_participants
